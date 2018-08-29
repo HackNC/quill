@@ -1,0 +1,276 @@
+diff --git a/.env.config b/.env.config
+index b1a4ec1..e6be958 100644
+--- a/.env.config
++++ b/.env.config
+@@ -2,7 +2,7 @@
+ NODE_ENV= 'dev'
+ 
+ # Connection string URI for your MongoDB database
+-DATABASE=''
++DATABASE='mongodb://localhost/'
+ 
+ # Port that this app runs on
+ PORT='3000'
+@@ -14,8 +14,8 @@ JWT_SECRET='shhhh super secret code here bro'
+ ROOT_URL='http://localhost:3000'
+ 
+ # Credentials for the admin user created at app initialization
+-ADMIN_EMAIL='admin@example.com'
+-ADMIN_PASS='party'
++ADMIN_EMAIL='akesjesse@gmail.com'
++ADMIN_PASS='password'
+ 
+ # Used to send verification, registration, and confirmation emails
+ EMAIL_CONTACT='Hackathon Team <team@example.com>'
+diff --git a/app/client/views/admin/stats/stats.html b/app/client/views/admin/stats/stats.html
+index 3c46638..cf74579 100644
+--- a/app/client/views/admin/stats/stats.html
++++ b/app/client/views/admin/stats/stats.html
+@@ -107,21 +107,6 @@
+           </div>
+         </div>
+ 
+-        <div class="item">
+-          <i class="child icon"></i>
+-          <div class="content">
+-            <strong>
+-              Women's shirt sizes:
+-            </strong> :
+-              XS ({{stats.shirtSizes['WXS']}})
+-              S ({{stats.shirtSizes['WS']}})
+-              M ({{stats.shirtSizes['WM']}})
+-              L ({{stats.shirtSizes['WL']}})
+-              XL ({{stats.shirtSizes['WXL']}})
+-              XXL ({{stats.shirtSizes['WXXL']}})
+-          </div>
+-        </div>
+-
+         <div class="ui divider"></div>
+ 
+         <div class="item">
+@@ -213,16 +198,16 @@
+     <div class="ui divider"></div>
+       <div class="ui list">
+         <div class="item">
+-          <strong>Fresh:</strong> {{stats.demo.year['2019']}} ({{stats.demo.year['2019'] / stats.total * 100 | number: 1}}%)
++          <strong>Fresh:</strong> {{stats.demo.year['2022']}} ({{stats.demo.year['2022'] / stats.total * 100 | number: 1}}%)
+         </div>
+         <div class="item">
+-          <strong>Soph:</strong> {{stats.demo.year['2018']}} ({{stats.demo.year['2018'] / stats.total * 100 | number: 1}}%)
++          <strong>Soph:</strong> {{stats.demo.year['2021']}} ({{stats.demo.year['2021'] / stats.total * 100 | number: 1}}%)
+         </div>
+         <div class="item">
+-         <strong>Junior:</strong> {{stats.demo.year['2017']}} ({{stats.demo.year['2017'] / stats.total * 100 | number: 1}}%)
++         <strong>Junior:</strong> {{stats.demo.year['2020']}} ({{stats.demo.year['2020'] / stats.total * 100 | number: 1}}%)
+         </div>
+         <div class="item">
+-          <strong>Senior:</strong> {{stats.demo.year['2016']}} ({{stats.demo.year['2016'] / stats.total * 100 | number: 1}}%)
++          <strong>Senior:</strong> {{stats.demo.year['2019']}} ({{stats.demo.year['2019'] / stats.total * 100 | number: 1}}%)
+         </div>
+       </div>
+     <div class="ui divider"></div>
+diff --git a/app/client/views/admin/user/user.html b/app/client/views/admin/user/user.html
+index eb36b1e..170ffc6 100644
+--- a/app/client/views/admin/user/user.html
++++ b/app/client/views/admin/user/user.html
+@@ -130,6 +130,22 @@
+         </select>
+       </div>
+ 
++      <div class="field">
++        <label>T-Shirt Size</label>
++        <select
++          name="shirtSize"
++          ng-model="user.profile.shirtSize">
++          <option value="">Shirt Size</option>
++          <option value="XS">XS</option>
++          <option value="S">S</option>
++          <option value="M">M</option>
++          <option value="L">L</option>
++          <option value="XL">XL</option>
++          <option value="XXL">XXL</option>
++          <option value="XXXL">XXXL</option>
++        </select>
++      </div>
++      
+       <div class="field">
+         <label>I would describe myself as a...</label>
+         <input type="text"
+diff --git a/app/client/views/admin/users/adminUsersCtrl.js b/app/client/views/admin/users/adminUsersCtrl.js
+index 4751491..411a947 100644
+--- a/app/client/views/admin/users/adminUsersCtrl.js
++++ b/app/client/views/admin/users/adminUsersCtrl.js
+@@ -221,7 +221,12 @@ angular.module('reg')
+               },{
+                 name: 'Gender',
+                 value: user.profile.gender
+-              },{
++              },
++              {
++                name: 'Shirt Size',
++                value: user.profile.shirtSize
++              },
++              {
+                 name: 'School',
+                 value: user.profile.school
+               },{
+diff --git a/app/client/views/application/application.html b/app/client/views/application/application.html
+index c770125..5f45103 100644
+--- a/app/client/views/application/application.html
++++ b/app/client/views/application/application.html
+@@ -51,9 +51,9 @@
+             name="year"
+             ng-model="user.profile.graduationYear">
+             <option value="">Graduation Year</option>
+-            <option value="2016">2016</option>
+-            <option value="2017">2017</option>
+-            <option value="2018">2018</option>
++            <option value="2022">2022</option>
++            <option value="2021">2021</option>
++            <option value="2020">2020</option>
+             <option value="2019">2019</option>
+           </select>
+         </div>
+@@ -71,6 +71,22 @@
+           </select>
+         </div>
+ 
++        <div class="field">
++          <label>T-Shirt Size</label>
++          <select
++            name="shirtSize"
++            ng-model="user.profile.shirtSize">
++            <option value="">Shirt Size</option>
++            <option value="XS">XS</option>
++            <option value="S">S</option>
++            <option value="M">M</option>
++            <option value="L">L</option>
++            <option value="XL">XL</option>
++            <option value="XXL">XXL</option>
++            <option value="XXXL">XXXL</option>
++          </select>
++        </div>
++
+         <div class="field">
+           <label>I would describe myself as a...</label>
+           <input type="text"
+diff --git a/app/client/views/application/applicationCtrl.js b/app/client/views/application/applicationCtrl.js
+index a124704..6deed68 100644
+--- a/app/client/views/application/applicationCtrl.js
++++ b/app/client/views/application/applicationCtrl.js
+@@ -155,6 +155,15 @@ angular.module('reg')
+                   prompt: 'You must be an adult, or an MIT student.'
+                 }
+               ]
++            },
++            shirtSize: {
++              identifier: 'shirtSize',
++              rules: [
++                {
++                  type: 'empty',
++                  prompt: 'Please select a T-Shirt size.'
++                }
++              ]
+             }
+           }
+         });
+diff --git a/app/server/models/User.js b/app/server/models/User.js
+index 3b3f536..d160675 100644
+--- a/app/server/models/User.js
++++ b/app/server/models/User.js
+@@ -28,7 +28,7 @@ var profile = {
+   graduationYear: {
+     type: String,
+     enum: {
+-      values: '2016 2017 2018 2019'.split(' '),
++      values: '2022 2021 2020 2019'.split(' '),
+     }
+   },
+ 
+@@ -52,6 +52,13 @@ var profile = {
+     }
+   },
+ 
++  shirtSize: {
++    type: String, 
++    enum: {
++      values: 'XS S M L XL XXL XXXL'.split(' ')
++    }
++  }
++
+ };
+ 
+ // Only after confirmed
+diff --git a/app/server/services/stats.js b/app/server/services/stats.js
+index 55a4b7a..7f70c74 100644
+--- a/app/server/services/stats.js
++++ b/app/server/services/stats.js
+@@ -19,10 +19,10 @@ function calculateStats(){
+       },
+       schools: {},
+       year: {
+-        '2016': 0,
+-        '2017': 0,
+-        '2018': 0,
+         '2019': 0,
++        '2020': 0,
++        '2021': 0,
++        '2022': 0,
+       }
+     },
+ 
+@@ -46,12 +46,7 @@ function calculateStats(){
+       'L': 0,
+       'XL': 0,
+       'XXL': 0,
+-      'WXS': 0,
+-      'WS': 0,
+-      'WM': 0,
+-      'WL': 0,
+-      'WXL': 0,
+-      'WXXL': 0,
++      'XXXL': 0,
+       'None': 0
+     },
+ 
+@@ -152,8 +147,8 @@ function calculateStats(){
+         // }
+ 
+         // Count shirt sizes
+-        if (user.confirmation.shirtSize in newStats.shirtSizes){
+-          newStats.shirtSizes[user.confirmation.shirtSize] += 1;
++        if (user.profile.shirtSize in newStats.shirtSizes){
++          newStats.shirtSizes[user.profile.shirtSize] += 1;
+         }
+ 
+         // Host needed counts
+@@ -229,7 +224,7 @@ function calculateStats(){
+ 
+ // Calculate once every five minutes.
+ calculateStats();
+-setInterval(calculateStats, 300000);
++setInterval(calculateStats, 6000);
+ 
+ var Stats = {};
+ 
+diff --git a/package.json b/package.json
+index ad27e6a..d8dc072 100644
+--- a/package.json
++++ b/package.json
+@@ -11,7 +11,6 @@
+     "dotenv": "^1.2.0",
+     "email-templates": "^2.0.1",
+     "express": "^4.9.8",
+-    "gulp": "^3.9.1",
+     "gulp-concat": "^2.6.1",
+     "gulp-minify-css": "^1.2.0",
+     "gulp-ng-annotate": "^1.1.0",
+@@ -42,7 +41,7 @@
+     "postinstall": "bower install && gulp build"
+   },
+   "devDependencies": {
+-    "gulp": "^3.9.0",
++    "gulp": "^3.9.1",
+     "gulp-browserify": "^0.5.1",
+     "gulp-concat": "^2.6.0",
+     "gulp-ng-annotate": "^1.0.0",

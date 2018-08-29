@@ -131,6 +131,22 @@
       </div>
 
       <div class="field">
+        <label>T-Shirt Size</label>
+        <select
+          name="shirtSize"
+          ng-model="user.profile.shirtSize">
+          <option value="">Shirt Size</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+          <option value="XXXL">XXXL</option>
+        </select>
+      </div>
+      
+      <div class="field">
         <label>I would describe myself as a...</label>
         <input type="text"
                placeholder="Designer, Data Scientist, iOS Wizard, Hacker Extraordinaire"

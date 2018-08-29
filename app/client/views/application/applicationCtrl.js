@@ -155,6 +155,15 @@ angular.module('reg')
                   prompt: 'You must be an adult, or an MIT student.'
                 }
               ]
+            },
+            shirtSize: {
+              identifier: 'shirtSize',
+              rules: [
+                {
+                  type: 'empty',
+                  prompt: 'Please select a T-Shirt size.'
+                }
+              ]
             }
           }
         });

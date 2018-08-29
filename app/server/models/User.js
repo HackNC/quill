@@ -28,7 +28,7 @@ var profile = {
   graduationYear: {
     type: String,
     enum: {
-      values: '2016 2017 2018 2019'.split(' '),
+      values: '2022 2021 2020 2019'.split(' '),
     }
   },
 
@@ -51,6 +51,13 @@ var profile = {
       values: 'M F O N'.split(' ')
     }
   },
+
+  shirtSize: {
+    type: String, 
+    enum: {
+      values: 'XS S M L XL XXL XXXL'.split(' ')
+    }
+  }
 
 };
 

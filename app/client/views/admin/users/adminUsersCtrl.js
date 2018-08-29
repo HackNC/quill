@@ -221,7 +221,12 @@ angular.module('reg')
               },{
                 name: 'Gender',
                 value: user.profile.gender
-              },{
+              },
+              {
+                name: 'Shirt Size',
+                value: user.profile.shirtSize
+              },
+              {
                 name: 'School',
                 value: user.profile.school
               },{

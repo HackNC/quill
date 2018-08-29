@@ -19,10 +19,10 @@ function calculateStats(){
       },
       schools: {},
       year: {
-        '2016': 0,
-        '2017': 0,
-        '2018': 0,
         '2019': 0,
+        '2020': 0,
+        '2021': 0,
+        '2022': 0,
       }
     },
 
@@ -46,12 +46,7 @@ function calculateStats(){
       'L': 0,
       'XL': 0,
       'XXL': 0,
-      'WXS': 0,
-      'WS': 0,
-      'WM': 0,
-      'WL': 0,
-      'WXL': 0,
-      'WXXL': 0,
+      'XXXL': 0,
       'None': 0
     },
 
@@ -152,8 +147,8 @@ function calculateStats(){
         // }
 
         // Count shirt sizes
-        if (user.confirmation.shirtSize in newStats.shirtSizes){
-          newStats.shirtSizes[user.confirmation.shirtSize] += 1;
+        if (user.profile.shirtSize in newStats.shirtSizes){
+          newStats.shirtSizes[user.profile.shirtSize] += 1;
         }
 
         // Host needed counts
@@ -229,7 +224,7 @@ function calculateStats(){
 
 // Calculate once every five minutes.
 calculateStats();
-setInterval(calculateStats, 300000);
+setInterval(calculateStats, 6000);
 
 var Stats = {};
 
