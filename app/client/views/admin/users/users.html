@@ -36,7 +36,7 @@
       <div class="ui long user modal">
         <i class="close icon"></i>
         <div class="header">
-          {{selectedUser.profile.name ? selectedUser.profile.name : selectedUser.email}}
+          {{selectedUser.profile.firstName ? selectedUser.profile.firstName : selectedUser.email}}
           <span
             ng-show="selectedUser.admin">
             (Admin)
@@ -96,7 +96,6 @@
             <th>School</th>
             <th>Grad</th>
             <th>V/S/A/C</th>
-            <th>Host</th>
             <th>$</th>
             <th></th>
             <th></th>
@@ -109,7 +108,7 @@
             ng-class="rowClass(user)">
             <td>
               <strong>
-                {{user.profile.name}}
+                {{user.profile.firstName}}  {{user.profile.lastName}}
                 &nbsp;
 
               </strong>
@@ -153,7 +152,7 @@
                 class="thin circle icon">
               </i>
 
-              <!-- Confirmed -->
+              <!-- confirmed -->
               <i
                 ng-if="!user.status.admitted"
                 class="circle thin icon">
@@ -173,36 +172,15 @@
 
             </td>
 
-            <!-- Host -->
-            <td
-              class="collapsing">
-
-              <span ng-if="user.status.confirmed">
-                <i
-                  ng-if="user.confirmation.hostNeededFri"
-                  class="home icon">
-                </i>
-                <i
-                  ng-if="!user.confirmation.hostNeededFri && user.confirmation.hostNeededSat"
-                  class="no icon">
-                </i>
-                <i
-                  ng-if="user.confirmation.hostNeededSat"
-                  class="home icon">
-                </i>
-              </span>
-
-            </td>
-
             <td
               class="collapsing">
               <span ng-if="user.status.confirmed">
                 <i
-                  ng-if="user.confirmation.needsReimbursement && !user.status.reimbursementGiven"
+                  ng-if="user.profile.needsReimbursement && !user.status.reimbursementGiven"
                   class="red money icon">
                 </i>
                 <i
-                  ng-if="user.confirmation.needsReimbursement && user.status.reimbursementGiven"
+                  ng-if="user.profile.needsReimbursement && user.status.reimbursementGiven"
                   class="green money icon">
                 </i>
               </span>

@@ -91,13 +91,34 @@ angular.module('reg')
           text: "Are you sure you would like to decline your admission? \n\n You can't go back!",
           type: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
+          confirmButtonColor: "#3b3450",
           confirmButtonText: "Yes, I can't make it.",
           closeOnConfirm: true
           }, function(){
 
             UserService
               .declineAdmission(user._id)
+              .success(function(user){
+                $rootScope.currentUser = user;
+                $scope.user = user;
+              });
+        });
+      };
+
+      $scope.confirmAdmission = function(){
+
+        swal({
+          title: "Thanks for confirming your spot!",
+          text: "We can't wait to see you at HackNC on Oct. 6th",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3b3450",
+          confirmButtonText: "I am going to HackNC",
+          closeOnConfirm: true
+          }, function(){
+
+            UserService
+              .updateConfirmation(user._id, {confirmed: true})
               .success(function(user){
                 $rootScope.currentUser = user;
                 $scope.user = user;

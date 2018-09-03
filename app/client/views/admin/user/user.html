@@ -1,7 +1,7 @@
 <div class="ui top attached segment">
 
   <div class="ui header">
-    {{selectedUser.profile.name ? selectedUser.profile.name : selectedUser.email}}
+    {{selectedUser.profile.firstName ? selectedUser.profile.firstName : selectedUser.email}}
     <span
       ng-show="selectedUser.admin">
       (Admin)
@@ -83,10 +83,40 @@
       </div>
 
       <div class="field">
-        <label> Full Name </label>
+        <label> First Name </label>
         <input type="text"
                name="name"
-               ng-model="selectedUser.profile.name">
+               ng-model="selectedUser.profile.firstName">
+      </div>
+
+      <div class="field">
+        <label> Last Name </label>
+        <input type="text"
+               name="name"
+               ng-model="selectedUser.profile.lastName">
+      </div>
+
+      <div class="field">
+        <label> What's your phone number? </label>
+        <p>
+          We need this in case we need to get ahold of you!
+        </p>
+        <input type="tel"
+               name="phone"
+               ng-model="selectedUser.profile.phoneNumber"
+               placeholder="(123) - 555 - 1234"
+               >
+      </div>
+
+      <div class="field">
+        <label> What's your birthdate? </label>
+        <p>
+          We need this for MLH and to verify that you say you are 18+. 
+        </p>
+        <input type="date"
+               name="birthdate"
+               ng-model="selectedUser.profile.birthdate"
+               >
       </div>
 
       <div class="field" ng-show="autoFilledSchool">
@@ -94,26 +124,46 @@
         <input class="ui input"
                disabled="disabled"
                ng-show="autoFilledSchool"
-               ng-model="selectedUser.profile.school">
+               ng-model="selectedUser.profile.school"
+               >
       </div>
 
       <div class="field" ng-show="!autoFilledSchool">
         <label> School </label>
-        <input class="ui input"
-               name="school"
-               ng-model="selectedUser.profile.school">
+        <div id="school" class="ui search">
+          <div class="ui input">
+            <input class="prompt" type="text" placeholder="School" name="school" ng-model="selectedUser.profile.school">                
+          </div>
+          <div class="results"></div>
+        </div>
       </div>
 
       <div class="field">
         <label>Graduation Year</label>
         <select
           name="year"
-          ng-model="selectedUser.profile.graduationYear">
+          ng-model="selectedUser.profile.graduationYear"
+          >
           <option value="">Graduation Year</option>
-          <option value="2016">2016</option>
-          <option value="2017">2017</option>
-          <option value="2018">2018</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
           <option value="2019">2019</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Most Current Level of Study</label>
+        <select
+          name="levelOfStudy"
+          ng-model="selectedUser.profile.levelOfStudy"
+          >
+          <option value="">Level Of Study</option>
+          <option value="HS">High School</option>
+          <option value="BA">Bachelor's Degree</option>
+          <option value="MA">Master's Degree</option>
+          <option value="PHD">PHD </option>
+          <option value="P">Post-doc</option>
         </select>
       </div>
 
@@ -121,7 +171,8 @@
         <label>Gender</label>
         <select
           name="gender"
-          ng-model="selectedUser.profile.gender">
+          ng-model="selectedUser.profile.gender"
+          >
           <option value="">Gender</option>
           <option value="M">Male</option>
           <option value="F">Female</option>
@@ -131,10 +182,43 @@
       </div>
 
       <div class="field">
+        <label ng-show="selectedUser.profile.gender === 'O' "> Please Specify </label>
+        <input type="text"
+               name="gender"
+               ng-show="selectedUser.profile.gender === 'O' "
+               ng-model="selectedUser.profile.otherGender">
+      </div>
+
+      <div class="field">
+        <label>Race/Ethnicity</label>
+        <select
+          name="ethnicity"
+          ng-model="selectedUser.profile.ethnicity"
+          >
+          <option value="">Race/Ethnicity</option>
+          <option value="AIAN">American Indian or Alaskan Native</option>
+          <option value="API">Asian / Pacific Islander</option>
+          <option value="BAA">Black or African American</option>
+          <option value="H">Hispanic</option>
+          <option value="W">White / Caucasian</option>
+          <option value="O">Multiple ethnicity / Other (Please Specify)</option>
+          <option value="N">I prefer not to answer.</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label ng-show="selectedUser.profile.ethnicity === 'O' "> Please Specify </label>
+        <input type="text"
+               name="ethnicity"
+               ng-show="selectedUser.profile.ethnicity === 'O' "
+               ng-model="selectedUser.profile.otherEthnicity">
+      </div>
+      <div class="field">
         <label>T-Shirt Size</label>
         <select
           name="shirtSize"
-          ng-model="user.profile.shirtSize">
+          ng-model="selectedUser.profile.shirtSize"
+          >
           <option value="">Shirt Size</option>
           <option value="XS">XS</option>
           <option value="S">S</option>
@@ -145,7 +229,7 @@
           <option value="XXXL">XXXL</option>
         </select>
       </div>
-      
+
       <div class="field">
         <label>I would describe myself as a...</label>
         <input type="text"
@@ -155,26 +239,125 @@
 
       <div class="field">
         <label>
-            What would you like to learn or get out of HackMIT? (optional)
+            What would you like to learn or get out of HackNC? (optional)
         </label>
         <textarea ng-model="selectedUser.profile.essay">
         </textarea>
       </div>
 
+      <div class="divided title"> Skills & Accomplishments </div>
+
+        <div class="field">
+          <label> What are you studying? </label>
+          <input type="text"
+                 name="study"
+                 placeholder="Computer Science, Product Design, Basket Weaving, etc."
+                 ng-model="selectedUser.profile.major"
+                 >
+        </div>
+
+        <div class="field">
+          <label> Github </label>
+          <input type="text"
+                 name="github"
+                 placeholder="https://github.com/foobar"
+                 ng-model="selectedUser.profile.github">
+        </div>
+
+        <div class="field">
+          <label> Twitter </label>
+          <input type="text"
+                 name="twitter"
+                 placeholder="https://twitter.com/foobar"
+                 ng-model="selectedUser.profile.twitter">
+        </div>
+
+        <div class="field">
+          <label> Skill Sheet </label>
+          <p>
+            Upload a document outlining any skills or experience you'd like to share (ex. resume). PDF preferred!
+          </p>
+          <a
+            target="_blank"
+            href="https://www.dropbox.com/request/K9gfElkiVXKqvLysnS0M"
+            class="ui pink button">
+            Upload
+          </a>
+        </div>
+
+        <div class="divided title">Travel</div>
+
+        <div class="field">
+          <p>
+            As a reminder, our reimbursement policy can be found <a href=''>here</a>
+          </p>
+        </div>
+
+        <div class="field">
+          <label> Will you be needing travel reimbursement? </label>
+          <div class="ui checkbox">
+            <input type="checkbox" ng-model="selectedUser.profile.needsReimbursement">
+            <label> I will be needing travel reimbursement. </label>
+          </div>
+        </div>
+
+        <div class="divided title">Legal</div>
+
+        <div class="field">
+          <label> Photo Release </label>
+          <p>
+            Checking this photo release means if we take photos or photos of you, we can share it with the world.
+          </p>
+          <div class="ui checkbox">
+            <input type="checkbox" id="signaturePhotoRelease" ng-model="selectedUser.profile.signaturePhotoRelease">
+            <label for="signaturePhotoRelease">I have read and agree to the Photo Release</label>
+         </div>
+        </div>
+
+        <div class="field">
+          <label> Code of Conduct </label>
+          <p>
+            <a
+              target="_blank"
+              href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+              Hacker Code of Conduct
+            </a>
+          </p>
+          <p>
+            It is extremely important to us that attendees follow a set of guidelines to make the event fun for everyone involved. Please read through and make sure you understand what we will be expecting of you.
+          </p>
+          <div class="ui checkbox">
+            <input type="checkbox" id="signatureCodeOfConduct" ng-model="selectedUser.profile.signatureCodeOfConduct">
+            <label for="signatureCodeOfConduct">I have read and agree to the MLH Code of Conduct.</label>
+         </div>
+        </div>
+        
+        <div class="field">
+          <label> MLH Affiliation </label>
+          <p>
+            We are affiliated with MLH and will share your info with them.
+          </p>
+          <div class="ui checkbox">
+            <input type="checkbox" id="signatureCodeOfConduct" ng-model="selectedUser.profile.signatureAffiliation">
+            <label for="signatureAffiliation">I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further I agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.
+            </label>
+         </div>
+        </div>
+        
       <div class="field"
            ng-hide="isMitStudent">
         <p>
-          Because of limitations imposed by MIT, we are not legally allowed to host
-          non-MIT minors (those under 18) for HackMIT 2015. Checking the box below affirms that you are or will be 18 years or older by September 19th, 2015.
+          Because of limitations imposed by UNC, we are not legally allowed to host
+          non-UNC minors (those under 18) for HackNC 2018. Checking the box below affirms that you are or will be 18 years or older by October 6th, 2018.
         </p>
         <p>
           <strong>
-          We will be checking ID. If you are a non-MIT minor, you will be turned away at the door.
+          We will be checking ID. If you are a non-UNC minor, you will be turned away at the door.
           </strong>
         </p>
         <div class="ui checkbox">
           <input type="checkbox" id="adult" ng-model="selectedUser.profile.adult">
-          <label for="adult">I am 18 or older.</label>
+          <label for="adult">I am 18 or older or a UNC Student.</label>
         </div>
       </div>
 
@@ -189,226 +372,6 @@
 
     </fieldset>
   </div>
-
-  <div class="ui divider"></div>
-
-  <div class="ui form">
-
-    <fieldset ng-disabled="false">
-
-      <div class="ui header">
-        Confirmation
-      </div>
-
-      <div class="field">
-        <label> Phone </label>
-        <input type="tel" ng-model="selectedUser.confirmation.phoneNumber" />
-      </div>
-
-      <div class="field">
-        <label> Dietary Restrictions </label>
-        <input
-          type="text" ng-model="selectedUser.confirmation.dietaryRestrictions" />
-      </div>
-
-      <div class="field">
-        <label> Shirt Size </label>
-        <input type="text" ng-model="selectedUser.profile.shirtSize" />
-      </div>
-
-      <div class="field">
-        <label> Major </label>
-        <input type="text" ng-model="selectedUser.profile.major" />
-      </div>
-
-      <div class="field">
-        <label> Github </label>
-        <input type="url" ng-model="selectedUser.profile.github" />
-      </div>
-
-      <div class="field">
-        <label> Website </label>
-        <input type="url" ng-model="selectedUser.profile.website" />
-      </div>
-
-      <div class="field">
-        <label> Resume </label>
-        <input type="url" ng-model="selectedUser.profile.resume" />
-      </div>
-
-      <div class="ui divider"></div>
-
-      <div class="field">
-        <label>
-          Needs Hardware
-        </label>
-        <div class="ui checkbox">
-          <input type="checkbox" ng-model="selectedUser.confirmation.wantsHardware">
-          <label> Yup, I need hardware </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>
-        Hardware
-        </label>
-        <input type="text" ng-model="selectedUser.confirmation.hardware">
-      </div>
-
-      <div class="ui divider"></div>
-
-      <div class="ui header">
-        Hosting
-      </div>
-
-      <div class="field">
-        <strong> Needs Hosting Friday </strong>
-        <i
-          ng-if="selectedUser.confirmation.hostNeededFri"
-          class="green check circle icon">
-        </i>
-        <i
-          ng-if="!selectedUser.confirmation.hostNeededFri"
-          class="red remove circle icon">
-        </i>
-      </div>
-
-      <div class="field">
-        <strong> Needs Hosting Saturday </strong>
-        <i
-          ng-if="selectedUser.confirmation.hostNeededSat"
-          class="green check circle icon">
-        </i>
-        <i
-          ng-if="!selectedUser.confirmation.hostNeededSat"
-          class="red remove circle icon">
-        </i>
-      </div>
-
-      <div class="field">
-        <strong> Gender Neutral </strong>
-        <i
-          ng-if="selectedUser.confirmation.genderNeutral"
-          class="green check circle icon">
-        </i>
-        <i
-          ng-if="!selectedUser.confirmation.genderNeutral"
-          class="red remove circle icon">
-        </i>
-      </div>
-
-      <div class="field">
-        <strong> Cat Friendly </strong>
-        <i
-          ng-if="selectedUser.confirmation.catFriendly"
-          class="green check circle icon">
-        </i>
-        <i
-          ng-if="!selectedUser.confirmation.catFriendly"
-          class="red remove circle icon">
-        </i>
-      </div>
-
-      <div class="field">
-        <strong> Smoking Friendly </strong>
-        <i
-          ng-if="selectedUser.confirmation.smokingFriendly"
-          class="green check circle icon">
-        </i>
-        <i
-          ng-if="!selectedUser.confirmation.smokingFriendly"
-          class="red remove circle icon">
-        </i>
-      </div>
-
-      <div class="field">
-        <label> Hosting Notes </label>
-        <textarea ng-model="selectedUser.confirmation.hostNotes"></textarea>
-      </div>
-
-      <div class="ui divider"></div>
-
-      <div class="ui header">
-        Travel
-      </div>
-
-      <div class="field">
-        <strong> Needs Reimbursement</strong>
-        <i
-          ng-if="selectedUser.confirmation.needsReimbursement"
-          class="green check circle icon">
-        </i>
-        <i
-          ng-if="!selectedUser.confirmation.needsReimbursement"
-          class="red remove circle icon">
-        </i>
-      </div>
-
-      <div class="field">
-        <label>Full Name</label>
-        <input type="text"
-               name="name"
-               ng-model="selectedUser.confirmation.address.name">
-      </div>
-
-      <div class="field">
-        <label> Address Line 1 - Street address, P.O. box, company name, c/o </label>
-        <input
-          type="text"
-          name="addressLine1"
-          ng-model="selectedUser.confirmation.address.line1">
-      </div>
-
-      <div class="field">
-        <label> Address Line 2 - Apartment, suite, unit, building, floor, etc. </label>
-        <input
-          type="text"
-          name="addressLine2"
-          ng-model="selectedUser.confirmation.address.line2">
-      </div>
-
-      <div class="four fields">
-        <div class="field">
-          <label> City </label>
-          <input
-            type="text"
-            name="city"
-            ng-model="selectedUser.confirmation.address.city">
-        </div>
-        <div class="field">
-          <label> State/Province/Region </label>
-          <input
-            type="text"
-            name="state"
-            ng-model="selectedUser.confirmation.address.state">
-        </div>
-        <div class="field">
-          <label> ZIP </label>
-          <input
-            type="text"
-            name="zip"
-            ng-model="selectedUser.confirmation.address.zip">
-        </div>
-        <div class="field">
-          <label> Country </label>
-          <input
-            type="text"
-            name="country"
-            ng-model="selectedUser.confirmation.address.country">
-        </div>
-      </div>
-
-      <div class="field">
-        <label> Receipt </label>
-        <input type="url" ng-model="selectedUser.confirmation.receipt" />
-      </div>
-
-      <div class="field">
-        <label> Additional Notes </label>
-        <textarea ng-model="selectedUser.confirmation.notes"></textarea>
-      </div>
-
-    </fieldset>
 
   </div>
 </div>

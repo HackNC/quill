@@ -27,6 +27,23 @@ angular.module('reg')
 
       $scope.regIsClosed = Date.now() > Settings.data.timeClose;
 
+      var dietaryRestrictions = {
+        'Vegetarian': false,
+        'Vegan': false,
+        'Halal': false,
+        'Kosher': false,
+        'Nut Allergy': false
+      };
+
+      if ($scope.user.profile.dietaryRestrictions){
+        $scope.user.profile.dietaryRestrictions.forEach(function(restriction){
+          if (restriction in dietaryRestrictions){
+            dietaryRestrictions[restriction] = true;
+          }
+        });
+      }
+
+      $scope.dietaryRestrictions = dietaryRestrictions;
       /**
        * TODO: JANK WARNING
        */
@@ -68,6 +85,14 @@ angular.module('reg')
       }
 
       function _updateUser(e){
+        // Get the dietary restrictions as an array
+        var drs = [];
+        Object.keys($scope.dietaryRestrictions).forEach(function(key){
+          if ($scope.dietaryRestrictions[key]){
+            drs.push(key);
+          }
+        });
+        $scope.user.profile.dietaryRestrictions = drs;
         UserService
           .updateProfile(Session.getUserId(), $scope.user.profile)
           .success(function(data){
@@ -111,12 +136,21 @@ angular.module('reg')
         $('.ui.form').form({
           inline: true,
           fields: {
-            name: {
-              identifier: 'name',
+            firstName: {
+              identifier: 'firstName',
               rules: [
                 {
                   type: 'empty',
-                  prompt: 'Please enter your name.'
+                  prompt: 'Please enter your first name.'
+                }
+              ]
+            },
+            lastName: {
+              identifier: 'lastName',
+              rules: [
+                {
+                  type: 'empty',
+                  prompt: 'Please enter your last name.'
                 }
               ]
             },
@@ -152,7 +186,7 @@ angular.module('reg')
               rules: [
                 {
                   type: 'allowMinors',
-                  prompt: 'You must be an adult, or an MIT student.'
+                  prompt: 'You must be an adult, or a UNC student.'
                 }
               ]
             },

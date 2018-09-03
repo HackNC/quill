@@ -50,6 +50,8 @@ angular.module('reg')
         return $http.post(base + id + '/decline');
       },
 
+      
+
       // ------------------------
       // Team
       // ------------------------

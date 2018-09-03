@@ -51,10 +51,15 @@
 
   }
 
+  img {
+    width: $sidebar-logo-size;
+    height: $sidebar-logo-size;
+  }
+  
   // Tab is the sibling of the sidebar
   +.tab {
     position: fixed;
-    width: $sidebar-tab-size;
+    width: $sidebar-tab-size ;
     height: $sidebar-tab-size;
     background: $sidebar-color;
     top: 12px;

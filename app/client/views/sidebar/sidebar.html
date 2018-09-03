@@ -2,7 +2,7 @@
      ng-class="{open: showSidebar}">
   <div ui-sref="app.dashboard"
        class="logo item">
-    <img src="assets/images/logo.svg">
+    <img src="assets/images/logo-transparent.png">
   </div>
 
   <div ui-sref-active="active"
@@ -19,14 +19,6 @@
       ng-show="!currentUser.status.declined"
       class="item">
       Application
-    </div>
-
-    <div
-      ui-sref-active="active"
-      ui-sref="app.confirmation"
-      ng-show="!pastConfirmation && currentUser.status.admitted && !currentUser.status.declined"
-      class="item">
-      Confirmation
     </div>
 
     <div
@@ -60,7 +52,7 @@
 
 <div class="tab"
   ng-click="toggleSidebar()">
-  <img ng-show="!showSidebar" src="assets/images/logo.svg" />
+  <img ng-show="!showSidebar" src="assets/images/logo-transparent.png" />
   <span class="close" ng-show="showSidebar">&#x2715</span>
 </div>
 

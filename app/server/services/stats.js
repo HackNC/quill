@@ -99,7 +99,7 @@ function calculateStats(){
         newStats.confirmed += user.status.confirmed ? 1 : 0;
 
         // Count confirmed that are mit
-        newStats.confirmedMit += user.status.confirmed && email === "mit.edu" ? 1 : 0;
+        newStats.confirmedMit += user.status.confirmed && email.includes("unc.edu") ? 1 : 0;
 
         newStats.confirmedFemale += user.status.confirmed && user.profile.gender == "F" ? 1 : 0;
         newStats.confirmedMale += user.status.confirmed && user.profile.gender == "M" ? 1 : 0;
@@ -110,10 +110,10 @@ function calculateStats(){
         newStats.declined += user.status.declined ? 1 : 0;
 
         // Count the number of people who need reimbursements
-        newStats.reimbursementTotal += user.confirmation.needsReimbursement ? 1 : 0;
+        newStats.reimbursementTotal += user.profile.needsReimbursement ? 1 : 0;
 
         // Count the number of people who still need to be reimbursed
-        newStats.reimbursementMissing += user.confirmation.needsReimbursement &&
+        newStats.reimbursementMissing += user.profile.needsReimbursement &&
           !user.status.reimbursementGiven ? 1 : 0;
 
         // Count the number of people who want hardware
@@ -165,9 +165,10 @@ function calculateStats(){
         newStats.hostNeededNone
           += (user.confirmation.hostNeededFri || user.confirmation.hostNeededSat) && user.profile.gender == "N" ? 1 : 0;
 
+        
         // Dietary restrictions
-        if (user.confirmation.dietaryRestrictions){
-          user.confirmation.dietaryRestrictions.forEach(function(restriction){
+        if (user.profile.dietaryRestrictions){
+          user.profile.dietaryRestrictions.forEach(function(restriction){
             if (!newStats.dietaryRestrictions[restriction]){
               newStats.dietaryRestrictions[restriction] = 0;
             }
@@ -190,7 +191,6 @@ function calculateStats(){
             });
           });
         newStats.dietaryRestrictions = restrictions;
-
         // Transform schools into an array of objects
         var schools = [];
         _.keys(newStats.demo.schools)

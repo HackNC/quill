@@ -184,7 +184,7 @@
           </div>
 
           <div class="ui purple button"
-               ui-sref="app.confirmation">
+            ng-click="confirmAdmission()">
             Confirm your spot
           </div>
 
@@ -229,8 +229,8 @@
           </div>
 
           <div class="ui purple button"
-               ui-sref="app.confirmation">
-            {{pastConfirmation ? 'View' : 'Edit'}} your confirmation information
+            ui-sref="app.application">
+            {{pastConfirmation ? 'View' : 'Edit'}} your application information
           </div>
 
           <div class="ui red button"
